@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Gestión - Domos Atacama</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<div class="container mt-5">
+    <h2 class="mb-4 text-primary">Panel de Control Interno (Dashboard Operativo)</h2>
+    
+    <div class="row" id="contenedor-domos">
+        </div>
+</div>
+
+<script>
+    const API_URL = 'http://localhost:8090/api/domos';
+
+
+    async function cargarDomos() {
+        try {
+            const respuesta = await fetch(API_URL);
+            const domos = await respuesta.json();
+            
+            const contenedor = document.getElementById('contenedor-domos');
+            contenedor.innerHTML = ''; 
+
+            domos.forEach(domo => {
+
+                let colorEstado = 'secondary';
+                if (domo.estado === 'Disponible') colorEstado = 'success';
+                if (domo.estado === 'Ocupado') colorEstado = 'danger';
+                if (domo.estado === 'Limpieza') colorEstado = 'warning text-dark';
+                if (domo.estado === 'Mantención') colorEstado = 'info text-white';
+                
+                const card = `
+                    <div class="col-md-4 mb-3">
+                        <div class="card shadow-sm border-0">
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold">Domo ${domo.numero}</h5>
+                                <p class="card-text text-muted">Capacidad: ${domo.capacidad} personas</p>
+                                <div class="mb-3">
+                                    <span class="badge bg-${colorEstado}">${domo.estado}</span>
+                                </div>
+                                
+                                <label class="form-label small fw-bold text-secondary">Cambiar Estado:</label>
+                                <select class="form-select form-select-sm" onchange="actualizarEstadoDomo(${domo.id}, this.value)">
+                                    <option value="Disponible" ${domo.estado === 'Disponible' ? 'selected' : ''}>Disponible</option>
+                                    <option value="Ocupado" ${domo.estado === 'Ocupado' ? 'selected' : ''}>Ocupado</option>
+                                    <option value="Limpieza" ${domo.estado === 'Limpieza' ? 'selected' : ''}>Limpieza</option>
+                                    <option value="Mantención" ${domo.estado === 'Mantención' ? 'selected' : ''}>Mantención</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                contenedor.innerHTML += card;
+            });
+
+        } catch (error) {
+            console.error("Error conectando al backend:", error);
+            document.getElementById('contenedor-domos').innerHTML = 
+                '<div class="alert alert-danger">No se pudo establecer conexión con el servidor central.</div>';
+        }
+    }
+
+
+    async function actualizarEstadoDomo(id, nuevoEstado) {
+        try {
+ 
+            const respuesta = await fetch(`${API_URL}/${id}/estado?nuevoEstado=${nuevoEstado}`, {
+                method: 'PUT'
+            });
+
+            if (respuesta.ok) {
+         
+                cargarDomos();
+            } else {
+                alert("Error al actualizar el estado en el servidor.");
+            }
+        } catch (error) {
+            console.error("Error en la petición de actualización:", error);
+            alert("No se pudo conectar con el servidor para guardar los cambios.");
+        }
+    }
+
+
+    cargarDomos();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,10 @@
+INSERT INTO DOMOS (numero, capacidad, estado, cliente, personas_reserva) VALUES ('Domo 1', 2, 'Disponible', NULL, 0);
+INSERT INTO DOMOS (numero, capacidad, estado, cliente, personas_reserva) VALUES ('Domo 2', 2, 'Disponible', NULL, 0);
+INSERT INTO DOMOS (numero, capacidad, estado, cliente, personas_reserva) VALUES ('Domo 3', 4, 'Disponible', NULL, 0);
+INSERT INTO DOMOS (numero, capacidad, estado, cliente, personas_reserva) VALUES ('Domo 4', 4, 'Disponible', NULL, 0);
+INSERT INTO DOMOS (numero, capacidad, estado, cliente, personas_reserva) VALUES ('Domo 5', 2, 'Disponible', NULL, 0);
+INSERT INTO DOMOS (numero, capacidad, estado, cliente, personas_reserva) VALUES ('Domo 6', 2, 'Disponible', NULL, 0);
+INSERT INTO DOMOS (numero, capacidad, estado, cliente, personas_reserva) VALUES ('Domo 7', 4, 'Disponible', NULL, 0);
+INSERT INTO DOMOS (numero, capacidad, estado, cliente, personas_reserva) VALUES ('Domo 8', 4, 'Disponible', NULL, 0);
+INSERT INTO DOMOS (numero, capacidad, estado, cliente, personas_reserva) VALUES ('Domo 9', 2, 'Disponible', NULL, 0);
+INSERT INTO DOMOS (numero, capacidad, estado, cliente, personas_reserva) VALUES ('Domo 10', 2, 'Disponible', NULL, 0);
